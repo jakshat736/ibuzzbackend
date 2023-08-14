@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('ibuzzbackend:server');
 var http = require('http');
-
+const {Server}=require('socket.io')
 /**
  * Get port from environment and store in Express.
  */
@@ -76,6 +76,23 @@ function onError(error) {
       throw error;
   }
 }
+
+
+const io=new Server(server,{
+  cors:{
+    origin:'https://indiabuzz.co.in',
+    methods:["GET","POST"]
+  }
+})
+
+io.on("connection",(socket)=>{
+  console.log(socket.id,'hjuhihjii')
+  socket.on("backend", (room) =>{socket.join(room)})
+socket.on("newEntry",({Enquiry,room})=>{
+   console.log(room,Enquiry)
+    io.in(room).emit("new",Enquiry)
+  })  
+})
 
 /**
  * Event listener for HTTP server "listening" event.

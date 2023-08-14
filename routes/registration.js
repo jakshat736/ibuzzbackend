@@ -13,7 +13,7 @@ router.post('/addregistration',upload.single() , async (req, res) => {
     const registration = new Registration(req.body);
     await registration.save();
     const accountSid = 'ACe7cc75d227306a525e3ffc54ce170974';
-    const authToken = '36be72a126a130bb84b85e420ba414c8';
+    const authToken = '3c6404fa65defec35a2b9c9c7d88e3c9';
     const client = require('twilio')(accountSid, authToken);
     
     client.messages.create({
